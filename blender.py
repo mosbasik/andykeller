@@ -31,10 +31,9 @@ def get_paths(rootdir):
 
 def load_data(filepath):
     '''
-    Given a filepath to a raw data file, loads the data into memory.
+    Given a filepath to a raw data file, returns the np.array it contains.
     '''
-    #with np.load(filepath) as f:
-        #TODO
+    return np.load(filepath)
 
 
 if __name__ == '__main__':
@@ -42,8 +41,20 @@ if __name__ == '__main__':
     # directory that stores all the raw results
     rootdir = './raw_results'
 
-    # list of all result file paths
+    # get a list of all the raw result filepaths
     filepaths = get_paths(rootdir)
+
+    # get the number of models being blended
+    numrows = len(filepaths)
+
+    # number of ratings being calculated by each model (should be constant)
+    numcols = 2749898
     
-    for filepath in filepaths:
-        #TODO
+    # initialize result matrix with zeroes
+    result_matrix = np.zeroes(shape=(numrows, numcols))
+
+    # populate matrix
+    for i, filepath in enumerate(filepaths):
+        result_matrix[i] = load_data(filepath)
+
+    #TODO
