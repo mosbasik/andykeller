@@ -3,7 +3,7 @@ import sys
 
 import numpy as np
 import scipy.io
-import scipy.sparse
+from scipy.sparse import csr_matrix
 
 
 NUM_USERS = 458293
