@@ -7,5 +7,15 @@ if __name__ == '__main__':
 
     DATAPATH = './data/sliced_data/base.dta'
     data = load_slice(DATAPATH)
-    
-    #TODO
+
+    rows, _ = data.shape
+
+    ratings = [record[3] for record in data]
+
+    npratings = np.array(ratings)
+
+    average = np.average(npratings)
+
+    with open('./models/rating_avg/raw_result.dta', 'w') as f:
+        for i in range(rows):
+            f.write(str(average))

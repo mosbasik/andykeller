@@ -1,7 +1,6 @@
 # Added by team:
-nflix.npz
-mu.zip
 data/
+*.dta
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

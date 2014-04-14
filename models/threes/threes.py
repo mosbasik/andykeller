@@ -8,8 +8,8 @@ if __name__ == '__main__':
     DATAPATH = './data/sliced_data/base.dta'
     data = load_slice(DATAPATH)
 
-    print data.shape
+    number_of_threes = data.shape[0]
 
     with open('./models/threes/raw_result.dta', 'w') as f:
-
-        f.write('3')
+        for i in range(number_of_threes):
+            f.write('3')
