@@ -38,23 +38,29 @@ def load_data(filepath):
 
 if __name__ == '__main__':
 
-    # directory that stores all the raw results
-    rootdir = './raw_results'
-
-    # get a list of all the raw result filepaths
-    filepaths = get_paths(rootdir)
-
-    # get the number of models being blended
-    numrows = len(filepaths)
-
-    # number of ratings being calculated by each model (should be constant)
-    numcols = 2749898
+    rootdir = './raw_results'      # directory that stores all the raw results
+    filepaths = get_paths(rootdir) # get a list of all the raw result filepaths
+    numrows = len(filepaths)       # get the number of models being blended
+    numcols = 2749898              # const # of ratings calculated by each model
     
-    # initialize result matrix with zeroes
-    result_matrix = np.zeroes(shape=(numrows, numcols))
+    # initialize result matrix with zeros
+    result_matrix = np.zeros(shape=(numrows, numcols))
 
-    # populate matrix
+    # populate result matrix
     for i, filepath in enumerate(filepaths):
         result_matrix[i] = load_data(filepath)
 
-    #TODO
+    # initialize validation array with zeros
+    valid_array = np.zeros((1, numcols))
+    
+    # populate validation array
+    with open('./data/sliced_data/hidden.dta') as f:
+        i = 0
+        for line in f:
+            rating = int(line.split()[3])
+            valid_array[0][i] = rating
+            i += 1
+
+    # debugging
+    print result_matrix.shape
+    print valid_array.shape
