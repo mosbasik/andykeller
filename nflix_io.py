@@ -102,5 +102,39 @@ def load_data():
     return util(ratings), util(dates), util(dsets)
 
 
+def load_slice(filepath):
+    '''
+    Takes a string filepath of a sliced data file (.dta) and parses it.  Returns
+    a 2D np.array such that the rows are records of the form:
+    {movie, user, date, rating}
+    '''
+    print "loading %s" % filepath
+    with open(filepath) as f:
+        
+        # get line count of file as cheaply as possible in order to correctly
+        # allocate the np.array
+        #for linecount, line in enumerate(f):
+        #    print linecount
+        #    pass
+        #linecount = linecount + 1
+
+        linecount = 102416306
+
+        # reset file pointer to beginning
+        #f.seek(0)
+
+        # initialize the array with zeros
+        data_array = np.zeros((linecount, 4))
+
+        # populate the array 
+        for i, line in enumerate(f):
+            #print i
+            line = line.split()
+            line = [int(x) for x in line]
+            data_array[i] = line
+
+    return data_array
+
+
 if __name__ == '__main__':
     print "No main specified at this time"
