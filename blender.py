@@ -21,7 +21,7 @@ def get_paths(path):
     '''
     # saves the results of this linux find command as a string:
     # $ find PATH -iname "*.npy"
-    syscall_output = check_output(['find', path, '-iname', '*.npy'])
+    syscall_output = subprocess.check_output(['find', path, '-iname', '*.npy'])
 
     # parses the string into a list of paths to result files
     filepaths = syscall_output[:-1].split('\n')
@@ -29,38 +29,37 @@ def get_paths(path):
     return filepaths
 
 
-def load_data(filepath):
-    '''
-    Given a filepath to a raw data file, returns the np.array it contains.
-    '''
-    return np.load(filepath)
-
-
 if __name__ == '__main__':
 
-    rootdir = './raw_results'      # directory that stores all the raw results
+    rootdir = './models'           # directory that stores all the raw results
     filepaths = get_paths(rootdir) # get a list of all the raw result filepaths
-    numrows = len(filepaths)       # get the number of models being blended
-    numcols = 2749898              # const # of ratings calculated by each model
     
+    # calculate necessary size for the matrix containing all raw results
+    numrows = len(filepaths)
+    numcols = np.load(filepaths[0], 'r+').shape[0]
+
     # initialize result matrix with zeros
-    result_matrix = np.zeros(shape=(numrows, numcols))
+    result_matrix = np.zeros((numrows, numcols))
 
     # populate result matrix
     for i, filepath in enumerate(filepaths):
-        result_matrix[i] = load_data(filepath)
+        result_matrix[i] = np.load(filepath, 'r+').T
 
-    # initialize validation array with zeros
-    valid_array = np.zeros((1, numcols))
+    #TODO
+    # # initialize validation array with zeros
+    # valid_array = np.zeros((1, numcols))
     
-    # populate validation array
-    with open('./data/sliced_data/hidden.dta') as f:
-        i = 0
-        for line in f:
-            rating = int(line.split()[3])
-            valid_array[0][i] = rating
-            i += 1
+    # # populate validation array
+    # with open('./data/sliced_data/hidden.dta') as f:
+    #     i = 0
+    #     for line in f:
+    #         rating = int(line.split()[3])
+    #         valid_array[0][i] = rating
+    #         i += 1
 
     # debugging
     print result_matrix.shape
-    print valid_array.shape
+    print np.average(result_matrix[0])
+    print np.average(result_matrix[1])
+    print result_matrix
+    #print valid_array.shape
