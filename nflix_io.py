@@ -113,21 +113,21 @@ def load_slice(filepath):
         
         # get line count of file as cheaply as possible in order to correctly
         # allocate the np.array
-        print "counting lines in %s" % filepath
+        #print "counting lines in %s" % filepath
         for linecount, line in enumerate(f):
             pass
         linecount = linecount + 1
-        print "lines found: %i" % linecount
+        print "%i lines found" % linecount
 
         # reset file pointer to beginning
         f.seek(0)
 
         # initialize the array with zeros
-        print "initializing array with zeros"
+        #print "initializing array with zeros"
         data_array = np.zeros((linecount, 4))
 
         # populate the array 
-        print "populating array"
+        #print "populating array"
         for i, line in enumerate(f):
             #print i
             line = line.split()
@@ -141,7 +141,7 @@ def load_slice(filepath):
                 print "unexpected array length"
                 assert false
 
-    print "returning array for %s" % filepath
+    print "%s finshed loading" % filepath
     return data_array
 
 
