@@ -1,6 +1,8 @@
 # Added by team:
 data/
 *.dta
+*.npy
+*.npz
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
