@@ -11,22 +11,21 @@ the result will be saved as a "blended result"
 import numpy as np
 import os
 import pprint
+import subprocess
 
 
-def get_paths(rootdir):
+def get_paths(path):
     '''
-    Given a path to a directory, returns a list of paths to all the files in
-    that directory as strings.
+    Given a path to a directory, returns a list of all the raw result files
+    (*.npy files) in that directory tree, as a list of path strings.
     '''
-    # returned object
-    filepaths = []
-    # walk through the directory tree
-    for root, directories, files in os.walk(rootdir):
-        for filename in files:
-            # join strings to get a complete path
-            filepath = os.path.join(root, filename)
-            filepaths.append(filepath)
-    # return the list of paths
+    # saves the results of this linux find command as a string:
+    # $ find PATH -iname "*.npy"
+    syscall_output = check_output(['find', path, '-iname', '*.npy'])
+
+    # parses the string into a list of paths to result files
+    filepaths = syscall_output[:-1].split('\n')
+
     return filepaths
 
 
