@@ -5,17 +5,29 @@ from nflix_io import *
 
 if __name__ == '__main__':
 
+    # "LEARNING" PHASE
+
     DATAPATH = './data/sliced_data/base.dta'
-    data = load_slice(DATAPATH)
+    base = load_slice(DATAPATH)
+    
+    base_ratings = np.zeros((base.shape[0], 1))
+    
+    for i, line in enumerate(base):
+        base_ratings[i] = line[3]
 
-    rows, _ = data.shape
+    average = np.average(base_ratings)
+    print "average rating is: %s" % average
 
-    ratings = [record[3] for record in data]
 
-    npratings = np.array(ratings)
+    # SAVING PHASE
 
-    average = np.average(npratings)
+    DATAPATH = './data/sliced_data/qual.dta'
+    qual = load_slice(DATAPATH)
 
-    with open('./models/rating_avg/raw_result.dta', 'w') as f:
-        for i in range(rows):
-            f.write(str(average))
+    raw = np.zeros((qual.shape[0], 1))
+
+    for i in range(qual.shape[0]):
+        raw[i] = average
+
+    # save the raw output
+    np.save('models/rating_avg/raw_result', raw)
