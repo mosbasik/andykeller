@@ -10,7 +10,7 @@ if __name__ == '__main__':
     DATAPATH = './data/sliced_data/base.dta'
     base = load_slice(DATAPATH)
     
-    base_ratings = np.zeros((base.shape[0], 1))
+    base_ratings = np.zeros(base.shape[0])
     
     for i, line in enumerate(base):
         base_ratings[i] = line[3]
@@ -24,7 +24,7 @@ if __name__ == '__main__':
     DATAPATH = './data/sliced_data/qual.dta'
     qual = load_slice(DATAPATH)
 
-    raw = np.zeros((qual.shape[0], 1))
+    raw = np.zeros(qual.shape[0])
 
     for i in range(qual.shape[0]):
         raw[i] = average
