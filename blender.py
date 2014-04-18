@@ -9,6 +9,7 @@ the result will be saved as a "blended result"
 
 
 import numpy as np
+import scipy.linalg
 import os
 import pprint
 import subprocess
@@ -16,50 +17,69 @@ import subprocess
 
 def get_paths(path):
     '''
-    Given a path to a directory, returns a list of all the raw result files
-    (*.npy files) in that directory tree, as a list of path strings.
+    Given a path to a parent directory, returns two lists: all the validation
+    result files and all the raw result files (both *.npy files) in that
+    directory tree as a list of path strings.
     '''
-    # saves the results of this linux find command as a string:
-    # $ find PATH -iname "*.npy"
-    syscall_output = subprocess.check_output(['find', path, '-iname', '*.npy'])
+    # saves the results of this linux find command as a string, then parses the
+    # string to a list of paths.
+    syscall_output = subprocess.check_output(['find', path, '-iname', 'validation.npy'])
+    validationpaths = syscall_output[:-1].split('\n')
 
-    # parses the string into a list of paths to result files
-    filepaths = syscall_output[:-1].split('\n')
+    # saves the results of this linux find command as a string, then parses the
+    # string to a list of paths.
+    syscall_output = subprocess.check_output(['find', path, '-iname', 'raw.npy'])
+    rawpaths = syscall_output[:-1].split('\n')
 
-    return filepaths
+    return (validationpaths, rawpaths)
+
 
 
 if __name__ == '__main__':
+    resultsdir = 'models'  # parent directory of all results
+    validationpaths, rawpaths = get_paths(resultsdir)  # get filepaths
 
-    rootdir = './models'           # directory that stores all the raw results
-    filepaths = get_paths(rootdir) # get a list of all the raw result filepaths
-    
-    # calculate necessary size for the matrix containing all raw results
-    numrows = len(filepaths)
-    numcols = np.load(filepaths[0], 'r+').shape[0]
+    # VALIDATION: CALCULATION OF WEIGHT VECTOR
+    # ----------------------------------------
 
-    # initialize result matrix with zeros
-    result_matrix = np.zeros((numrows, numcols))
+    # calculate necessary size for the matrix V which contains all validation
+    # results, initialize it with zeros, and populate it
+    numrows = len(validationpaths)
+    numcols = np.load(validationpaths[0], 'r+').shape[0]
+    V = np.zeros((numrows, numcols))
+    for i, validtionpath in enumerate(validationpaths):
+        V[i] = np.load(validtionpath, 'r+').T
+    V = V.T
 
-    # populate result matrix
-    for i, filepath in enumerate(filepaths):
-        result_matrix[i] = np.load(filepath, 'r+').T
+    # save ratings of the validation set ("hidden") in vector S
+    S = np.loadtxt('data/sliced_data/hidden.dta', dtype=int, unpack=True)[3]
 
-    #TODO
-    # # initialize validation array with zeros
-    # valid_array = np.zeros((1, numcols))
-    
-    # # populate validation array
-    # with open('./data/sliced_data/hidden.dta') as f:
-    #     i = 0
-    #     for line in f:
-    #         rating = int(line.split()[3])
-    #         valid_array[0][i] = rating
-    #         i += 1
+    # find weight vector X using least-squares linear regression
+    regression = scipy.linalg.lstsq(V, S, check_finite=False)
+    X = regression[0]
 
-    # debugging
-    print result_matrix.shape
-    print np.average(result_matrix[0])
-    print np.average(result_matrix[1])
-    print result_matrix
-    #print valid_array.shape
+
+    # RESULTS: CREATION OF RESULT VECTOR
+    # ----------------------------------
+
+    # calculate necessary size for the matrix R which contains all raw results,
+    # initialize it with zeros, and populate it
+    numrows = len(rawpaths)
+    numcols = np.load(rawpaths[0], 'r+').shape[0]
+    R = np.zeros((numrows, numcols))
+    for i, rawpath in enumerate(rawpaths):
+        R[i] = np.load(rawpath, 'r+').T
+
+    print R.shape
+    print R
+
+    for i in range(R.shape[0]):
+        R[i] = np.multiply(R[i], X[i])
+
+    print R.shape
+    print R
+
+    R = np.mean(R, axis=0)
+
+    print R.shape
+    print R
