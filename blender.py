@@ -51,12 +51,27 @@ if __name__ == '__main__':
         V[i] = np.load(validtionpath, 'r+').T
     V = V.T
 
+    print 'Information of V (validation result matrix)'
+    print V.shape
+    print V
+    print ''
+
     # save ratings of the validation set ("hidden") in vector S
     S = np.loadtxt('data/sliced_data/hidden.dta', dtype=int, unpack=True)[3]
+
+    print 'Information of S (rating vector of validation records)'
+    print S.shape
+    print S
+    print ''
 
     # find weight vector X using least-squares linear regression
     regression = scipy.linalg.lstsq(V, S, check_finite=False)
     X = regression[0]
+
+    print 'Information of X (blending weights vector)'
+    print X.shape
+    print X
+    print ''
 
 
     # RESULTS: CREATION OF RESULT VECTOR
@@ -70,16 +85,22 @@ if __name__ == '__main__':
     for i, rawpath in enumerate(rawpaths):
         R[i] = np.load(rawpath, 'r+').T
 
+    print 'Information of R (raw results matrix)'
     print R.shape
     print R
+    print ''
 
     for i in range(R.shape[0]):
         R[i] = np.multiply(R[i], X[i])
 
+    print 'Information of R after multipying by weights vector'
     print R.shape
     print R
+    print ''
 
     R = np.mean(R, axis=0)
 
+    print 'Information of R after taking elementwise average'
     print R.shape
     print R
+    print ''
