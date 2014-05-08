@@ -11,6 +11,12 @@ if __name__ == '__main__':
     print U.size
     print U.shape
 
-    print "V"
+    print "V:"
     print V.size
     print V.shape
+
+    R = U * V.T
+
+    print "R:"
+    print R.size
+    print R.shape
