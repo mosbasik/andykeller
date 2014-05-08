@@ -154,9 +154,10 @@ def load_feature_mm(filepath):
     print "loading %s" % filepath
     with open(filepath) as f:
         
-        # get dimensions of file from first line of .mm in order to correctly
+        # get dimensions of file from header of .mm in order to correctly
         # allocate the np.array
         print "getting dimensions of %s" % filepath
+        first_line = f.readline()
         first_line = f.readline()
         first_line = first_line.split()
         first_line = [int(x) for x in first_line]
