@@ -145,7 +145,7 @@ def load_slice(filepath):
     return data_array
 
 
-def load_feature_mm(filepath):
+def load_mm(filepath):
     '''
     Takes a string filepath of a feature vector file (.mm) and parses it.
     Returns a 2D np.array such that the rows represent moves and are of the
