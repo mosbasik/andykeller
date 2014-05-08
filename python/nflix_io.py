@@ -173,7 +173,7 @@ def load_feature_mm(filepath):
         for i, line in enumerate(f):
             print i
             line = line.split()
-            line = [int(x) for x in line]
+            line = [float(x) for x in line]
 
             if len(line) == featurecount:
                 data_array[i] = line
