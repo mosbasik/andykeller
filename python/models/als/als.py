@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/home/phenry/andykeller')
+sys.path.append('/home/phenry/andykeller/python')
 from nflix_io import *
 
 
