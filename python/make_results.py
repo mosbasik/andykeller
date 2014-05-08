@@ -14,7 +14,7 @@ if __name__ == "__main__":
                       item. Should be in MM format.", metavar="VFILE")
     
     parser.add_option("-o", "--output_file",
-                      help="Output directory for ratings file.", metavar="RFILE")
+                      help="Output destination for ratings file.", metavar="RFILE")
     
     (options, args) = parser.parse_args()
     
