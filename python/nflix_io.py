@@ -159,6 +159,7 @@ def load_feature_mm(filepath):
         print "getting dimensions of %s" % filepath
         first_line = f.readline()
         first_line = f.readline()
+        first_line = f.readline()
         first_line = first_line.split()
         first_line = [int(x) for x in first_line]
         linecount, featurecount = first_line
