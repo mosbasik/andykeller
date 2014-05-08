@@ -12,12 +12,14 @@ if __name__ == '__main__':
 
     print "U:"
     print U
+    print type(U)
     print U.size
     print U.shape
     print ''
 
     print "V:"
     print V
+    print type(V)
     print V.size
     print V.shape
     print ''
@@ -26,6 +28,7 @@ if __name__ == '__main__':
 
     print "R:"
     print R
+    print type(R)
     print R.size
     print R.shape
     print ''
