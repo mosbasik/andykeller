@@ -18,19 +18,33 @@ if __name__ == "__main__":
     
     (options, args) = parser.parse_args()
     
+    # Get the data from the output of graphchi
     U = load_mm(options.user_features)
     V = load_mm(options.item_features)
+
+    # Transform from arrays to matrices
+    U = np.matrix(U)
+    V = np.matrix(V)
     
     print "U:"
+    print U
+    print type(U)
     print U.size
     print U.shape
+    print ''
 
     print "V:"
+    print V
+    print type(V)
     print V.size
     print V.shape
+    print ''
 
     R = U * V.T
 
     print "R:"
+    print R
+    print type(R)
     print R.size
-    print R.shape    
+    print R.shape
+    print ''
