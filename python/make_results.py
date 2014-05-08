@@ -1,3 +1,7 @@
+import sys
+sys.path.append('/shared/andykeller/python')
+from nflix_io import *
+
 if __name__ == "__main__":
     from optparse import OptionParser
     parser = OptionParser()
