@@ -34,7 +34,7 @@ if __name__ == '__main__':
     print V.shape
     print ''
 
-    R = np.dot(U, V.T)
+    R = U * V.T
 
     print "R:"
     print R
