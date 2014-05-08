@@ -190,7 +190,7 @@ def load_feature_mm(filepath):
     Returns a 2D np.array such that the rows represent moves and are of the
     form: {feature, feature, feature, ..., feature}
     '''
-    return np.loadtxt(filepath, dtype=float, comments=%, skiprows=1, ndmin=2)
+    return np.loadtxt(filepath, dtype=float, comments="%", skiprows=1, ndmin=2)
 
 
 if __name__ == '__main__':
