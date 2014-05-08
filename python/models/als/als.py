@@ -15,7 +15,7 @@ if __name__ == '__main__':
     print V.size
     print V.shape
 
-    R = U * V.T
+    R = np.multiply(U, V.T)
 
     print "R:"
     print R.size
