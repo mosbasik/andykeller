@@ -145,45 +145,6 @@ def load_slice(filepath):
     return data_array
 
 
-# def load_feature_mm(filepath):
-#     '''
-#     Takes a string filepath of a feature vector file (.mm) and parses it.
-#     Returns a 2D np.array such that the rows represent moves and are of the
-#     form: {feature, feature, feature, ..., feature}
-#     '''
-#     print "loading %s" % filepath
-#     with open(filepath) as f:
-        
-#         # get dimensions of file from header of .mm in order to correctly
-#         # allocate the np.array
-#         print "getting dimensions of %s" % filepath
-#         first_line = f.readline()
-#         first_line = f.readline()
-#         first_line = f.readline()
-#         first_line = first_line.split()
-#         first_line = [int(x) for x in first_line]
-#         linecount, featurecount = first_line
-
-#         # initialize the array with zeros
-#         print "initializing array with zeros"
-#         data_array = np.zeros((linecount, featurecount))
-
-#         # populate the array
-#         print "populating array"
-#         for i, line in enumerate(f):
-#             print i
-#             line = line.split()
-#             line = [float(x) for x in line]
-
-#             if len(line) == featurecount:
-#                 data_array[i] = line
-#             else:
-#                 print "unexpected array length"
-#                 assert false
-
-#     print "%s finshed loading" % filepath
-#     return data_array
-
 def load_feature_mm(filepath):
     '''
     Takes a string filepath of a feature vector file (.mm) and parses it.
