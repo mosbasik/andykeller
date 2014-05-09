@@ -36,6 +36,8 @@ def get_qual_user_feature_vectors(u_array):
     print qual_users_features.shape
     print ''
 
+    return qual_users_features
+
 
 
 if __name__ == "__main__":
@@ -57,6 +59,9 @@ if __name__ == "__main__":
     # Get the data from the output of graphchi
     U = load_mm(options.user_features)
     V = load_mm(options.item_features)
+
+    # Filter out users not needed by qual
+    U = get_qual_user_feature_vectors(U)
 
     # Transform from arrays to matrices
     U = np.matrix(U)
