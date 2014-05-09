@@ -16,6 +16,7 @@ def get_qual_user_feature_vectors(u_array):
     if not os.path.isfile('/shared/data/qual_users.npy'):
         qual_users = np.loadtxt('/shared/data/qual.dta', dtype=int, usecols=(0,), unpack=True)
         qual_users = np.unique(qual_users)
+        qual_users = qual_users - 1
         np.save('/shared/data/qual_users.npy', qual_users)
 
     # Get the array
