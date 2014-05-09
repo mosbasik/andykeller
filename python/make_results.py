@@ -1,6 +1,42 @@
 import sys
+import os.path
 sys.path.append('/shared/andykeller/python')
 from nflix_io import *
+
+
+def get_qual_user_feature_vectors(u_array):
+    '''
+    Given a 2D np.array where each row is a feature vector corresponding to a 
+    specific user, return an analogous array that only includes users used in
+    the qual data set.
+    '''
+
+    # Check existance of file containing unique ids of all qual users.  If it
+    # doesn't exist; we'll make one.
+    if not os.path.isfile('/shared/data/qual_users.npy'):
+        qual_users = np.loadtxt('shared/data/qual.dta', dtype=int, usecols=(0), unpack=True)
+        qual_users = np.unique(qual_users)
+        np.save('/shared/data/qual_users.npy', qual_users)
+
+    # Get the array
+    qual_users = np.load('/shared/data/qual_users.npy')
+
+    print 'qual_users:'
+    print qual_users
+    print qual_users.size
+    print qual_users.shape
+    print ''
+
+    # Select corresponding rows from u_array
+    qual_users_features = u_array[qual_users]
+
+    print 'qual_users_features:'
+    print qual_users_features
+    print qual_users_features.size
+    print qual_users_features.shape
+    print ''
+
+
 
 if __name__ == "__main__":
     from optparse import OptionParser
