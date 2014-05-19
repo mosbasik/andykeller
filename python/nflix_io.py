@@ -172,7 +172,7 @@ def load_mm(filepath):
     shape = np_array.shape
 
     # create and initialize h5py file and dataset of correct shape
-    with h5py.File(name + '.h5py', 'w') as f:
+    with h5py.File(path + '/' + name + '.h5py', 'w') as f:
         matrixpath = path + '/' + name + '.h5py'
         dset = f.create_dataset(name + '.h5py', shape, dtype="float", data=np_array, chunks=True)
         print '%s created' % matrixpath
