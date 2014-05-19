@@ -163,7 +163,9 @@ def load_mm(filepath):
     '''
 
     path = os.path.dirname(filepath)
-    name = os.path.basename(filepath).split('.')[0]
+    basename = os.path.basename(filepath)
+    name = basename.split('.')[0]
+    matrixpath = path + '/' + name + '.h5py'
 
     # load from matrix market file into numpy array, dropping header
     np_array = np.loadtxt(filepath, dtype=float, comments="%", skiprows=3, ndmin=2)
@@ -173,9 +175,11 @@ def load_mm(filepath):
 
     # create and initialize h5py file and dataset of correct shape
     with h5py.File(path + '/' + name + '.h5py', 'w') as f:
-        matrixpath = path + '/' + name + '.h5py'
         dset = f.create_dataset(name + '.h5py', shape, dtype="float", data=np_array, chunks=True)
         print '%s created' % matrixpath
+        
+    return matrixpath 
+
 
 def transpose_h5py(filepath):
     '''
