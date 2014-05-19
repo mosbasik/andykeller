@@ -189,7 +189,7 @@ def transpose_h5py(filepath):
     name = basename.split('.')[0]
 
     with h5py.File(filepath, 'r') as f:
-        M = f[basename]
+        M = f[basename + '.h5py']
         Tshape = M.shape[::-1]
         with h5py.File(path + '/' + name + '_T.h5py', 'w') as g:
             T = g.create_dataset(name + '_T.h5py', Tshape, dtype='float')
