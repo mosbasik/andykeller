@@ -59,7 +59,9 @@ if __name__ == "__main__":
     (options, args) = parser.parse_args()
     
     Upath = load_mm(options.user_features)
-    UTpath = transpose_h5py(Upath)
+    Vpath = load_mm(options.item_features)
+
+    VTpath = transpose_h5py(Vpath)
 
     # Get the data from the output of graphchi
     #U = load_mm(options.user_features)
