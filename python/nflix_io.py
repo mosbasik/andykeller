@@ -5,6 +5,8 @@ import numpy as np
 import scipy.io
 from scipy.sparse import csr_matrix
 
+import h5py
+
 
 NUM_USERS = 458293
 NUM_MOVIES = 17770
@@ -145,13 +147,31 @@ def load_slice(filepath):
     return data_array
 
 
+# def load_mm(filepath):
+#     '''
+#     Takes a string filepath of a feature vector file (.mm) and parses it.
+#     Returns a 2D np.array such that the rows represent moves and are of the
+#     form: {feature, feature, feature, ..., feature}
+#     '''
+#     return np.loadtxt(filepath, dtype=float, comments="%", skiprows=3, ndmin=2)
+
 def load_mm(filepath):
     '''
     Takes a string filepath of a feature vector file (.mm) and parses it.
     Returns a 2D np.array such that the rows represent moves and are of the
     form: {feature, feature, feature, ..., feature}
     '''
-    return np.loadtxt(filepath, dtype=float, comments="%", skiprows=3, ndmin=2)
+
+    # load from matrix market file into numpy array, dropping header
+    np_array = np.loadtxt(filepath, dtype=float, comments="%", skiprows=3, ndmin=2)
+
+    # get the shape of the array
+    shape = np_array.shape
+
+    # create h5py file and dataset of correct size
+    with h5py.File("mytestfile.h5py", "w") as f:
+        dset = f.create_dataset("mydataset", shape, dtype="float", data=np_array, chunks=True)
+        print 'mytestfile.h5py created'
 
 
 if __name__ == '__main__':

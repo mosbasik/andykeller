@@ -2,6 +2,7 @@ import sys
 import os.path
 sys.path.append('/shared/andykeller/python')
 from nflix_io import *
+import h5py
 
 
 def get_qual_user_feature_vectors(u_array):
@@ -57,36 +58,38 @@ if __name__ == "__main__":
     
     (options, args) = parser.parse_args()
     
+    load_mm(options.user_features)
+    
     # Get the data from the output of graphchi
-    U = load_mm(options.user_features)
-    V = load_mm(options.item_features)
+    #U = load_mm(options.user_features)
+    #V = load_mm(options.item_features)
 
     # Filter out users not needed by qual
-    U = get_qual_user_feature_vectors(U)
+    #U = get_qual_user_feature_vectors(U)
 
     # Transform from arrays to matrices
-    U = np.matrix(U)
-    V = np.matrix(V)
+    #U = np.matrix(U)
+    #V = np.matrix(V)
     
-    print "U:"
-    print U
-    print type(U)
-    print U.size
-    print U.shape
-    print ''
+    # print "U:"
+    # print U
+    # print type(U)
+    # print U.size
+    # print U.shape
+    # print ''
 
-    print "V:"
-    print V
-    print type(V)
-    print V.size
-    print V.shape
-    print ''
+    # print "V:"
+    # print V
+    # print type(V)
+    # print V.size
+    # print V.shape
+    # print ''
 
-    R = U * V.T
+    # R = U * V.T
 
-    print "R:"
-    print R
-    print type(R)
-    print R.size
-    print R.shape
-    print ''
+    # print "R:"
+    # print R
+    # print type(R)
+    # print R.size
+    # print R.shape
+    # print ''
