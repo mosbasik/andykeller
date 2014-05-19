@@ -177,7 +177,7 @@ def load_mm(filepath):
     with h5py.File(path + '/' + name + '.h5py', 'w') as f:
         dset = f.create_dataset(name + '.h5py', shape, dtype="float", data=np_array, chunks=True)
         print '%s created' % matrixpath
-        
+
     return matrixpath 
 
 
@@ -190,8 +190,9 @@ def transpose_h5py(filepath):
 
     with h5py.File(filepath, 'r') as f:
         M = f[basename]
+        Tshape = M.shape[::-1]
         with h5py.File(path + '/' + name + '_T.h5py', 'w') as g:
-            T = f.create_dataset(name + '_T.h5py', M.shape[::-1], dtype='float', chunks=True)
+            T = f.create_dataset(name + '_T.h5py', Tshape, dtype='float', chunks=True)
             for i, movie in enumerate(M):
                 for j, feature in enumerate(movie):
                     T[j][i] = M[i][j]
