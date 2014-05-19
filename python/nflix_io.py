@@ -150,7 +150,7 @@ def load_slice(filepath):
 # def load_mm(filepath):
 #     '''
 #     Takes a string filepath of a feature vector file (.mm) and parses it.
-#     Returns a 2D np.array such that the rows represent moves and are of the
+#     Returns a 2D np.array such that the rows represent movies and are of the
 #     form: {feature, feature, feature, ..., feature}
 #     '''
 #     return np.loadtxt(filepath, dtype=float, comments="%", skiprows=3, ndmin=2)
@@ -158,8 +158,8 @@ def load_slice(filepath):
 def load_mm(filepath):
     '''
     Takes a string filepath of a feature vector file (.mm) and parses it.
-    Returns a 2D np.array such that the rows represent moves and are of the
-    form: {feature, feature, feature, ..., feature}
+    Creates an h5py dataset of the same name, such that the rows represent movies
+    and are of the form: {feature, feature, feature, ..., feature}
     '''
 
     path = os.path.dirname(filepath)
@@ -176,6 +176,22 @@ def load_mm(filepath):
         matrixpath = path + '/' + name + '.h5py'
         dset = f.create_dataset(name + '.h5py', shape, dtype="float", data=np_array, chunks=True)
         print '%s created' % matrixpath
+
+def transpose_h5py(filepath):
+    '''
+    '''
+    path = os.path.dirname(filepath)
+    basename = os.path.basename(filepath)
+    name = basename.split('.')[0]
+
+    with h5py.File(filepath, 'r') as f:
+        M = f[basename]
+        with h5py.File(path + '/' + name + '_T.h5py', 'w') as g:
+            T = f.create_dataset(name + '_T.h5py', M.shape[::-1], dtype='float', chunks=True)
+            for i, movie in enumerate(M):
+                for j, feature in enumerate(movie):
+                    T[j][i] = M[i][j]
+
 
 
 if __name__ == '__main__':
