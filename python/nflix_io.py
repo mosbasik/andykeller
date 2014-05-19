@@ -192,7 +192,7 @@ def transpose_h5py(filepath):
         M = f[basename]
         Tshape = M.shape[::-1]
         with h5py.File(path + '/' + name + '_T.h5py', 'w') as g:
-            T = f.create_dataset(name + '_T.h5py', Tshape, dtype='float', chunks=True)
+            T = g.create_dataset(name + '_T.h5py', Tshape, dtype='float', chunks=True)
             for i, movie in enumerate(M):
                 for j, feature in enumerate(movie):
                     T[j][i] = M[i][j]
