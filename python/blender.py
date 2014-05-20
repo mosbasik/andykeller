@@ -95,8 +95,6 @@ if __name__ == '__main__':
     print R
     print ''
 
-    assert False
-
     for i in range(R.shape[0]):
         R[i] = np.multiply(R[i], X[i])
 
