@@ -60,7 +60,7 @@ if __name__ == '__main__':
     print V
     print ''
 
-    return 0
+    break
 
     # save ratings of the validation set ("hidden") in vector S
     S = np.loadtxt('data/sliced_data/hidden.dta', dtype=int, unpack=True)[3]
