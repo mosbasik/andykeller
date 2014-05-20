@@ -47,8 +47,8 @@ if __name__ == '__main__':
     numrows = len(validationpaths)
     numcols = np.loadtxt(validationpaths[0], unpack=True).shape[0]
 
-    print 'number of validation paths: ' + str(numrows)
-    print 'number of rows in each validation file: ' + str(numcols)
+    #print 'number of validation paths: ' + str(numrows)
+    #print 'number of rows in each validation file: ' + str(numcols)
 
     V = np.zeros((numrows, numcols))
     for i, validationpath in enumerate(validationpaths):
@@ -59,8 +59,6 @@ if __name__ == '__main__':
     print V.shape
     print V
     print ''
-
-    assert False
 
     # save ratings of the validation set ("hidden") in vector S
     S = np.loadtxt('data/sliced_data/hidden.dta', dtype=int, unpack=True)[3]
@@ -78,6 +76,8 @@ if __name__ == '__main__':
     print X.shape
     print X
     print ''
+
+    assert False
 
 
     # RESULTS: CREATION OF RESULT VECTOR
