@@ -36,7 +36,7 @@ def get_paths(path):
 
 
 if __name__ == '__main__':
-    resultsdir = 'models'  # parent directory of all results
+    resultsdir = '/shared/out'  # parent directory of all results
     validationpaths, rawpaths = get_paths(resultsdir)  # get filepaths
 
     # VALIDATION: CALCULATION OF WEIGHT VECTOR
@@ -45,16 +45,22 @@ if __name__ == '__main__':
     # calculate necessary size for the matrix V which contains all validation
     # results, initialize it with zeros, and populate it
     numrows = len(validationpaths)
-    numcols = np.load(validationpaths[0], 'r+').shape[0]
+    numcols = np.loadtxt(validationpaths[0], unpack=True)[0].shape[0]
+
+    print 'number of validation paths: ' + numrows
+    print 'number of rows in each validation file: ' + numcols
+
     V = np.zeros((numrows, numcols))
-    for i, validtionpath in enumerate(validationpaths):
-        V[i] = np.load(validtionpath, 'r+').T
+    for i, validationpath in enumerate(validationpaths):
+        V[i] = np.loadtxt(validationpath, unpack=True)[0]
     V = V.T
 
     print 'Information of V (validation result matrix)'
     print V.shape
     print V
     print ''
+
+    return 0
 
     # save ratings of the validation set ("hidden") in vector S
     S = np.loadtxt('data/sliced_data/hidden.dta', dtype=int, unpack=True)[3]
