@@ -45,14 +45,14 @@ if __name__ == '__main__':
     # calculate necessary size for the matrix V which contains all validation
     # results, initialize it with zeros, and populate it
     numrows = len(validationpaths)
-    numcols = np.loadtxt(validationpaths[0], unpack=True).shape[0]
+    numcols = np.loadtxt(validationpaths[0], unpack=True, comments='%').shape[0]
 
     #print 'number of validation paths: ' + str(numrows)
     #print 'number of rows in each validation file: ' + str(numcols)
 
     V = np.zeros((numrows, numcols))
     for i, validationpath in enumerate(validationpaths):
-        V[i] = np.loadtxt(validationpath, unpack=True)
+        V[i] = np.loadtxt(validationpath, unpack=True, comments='%')
     V = V.T
 
     print 'Information of V (validation result matrix)'
@@ -84,11 +84,11 @@ if __name__ == '__main__':
     # calculate necessary size for the matrix R which contains all raw results,
     # initialize it with zeros, and populate it
     numrows = len(rawpaths)
-    numcols = np.loadtxt(rawpaths[0], unpack=True).shape[0]
+    numcols = np.loadtxt(rawpaths[0], unpack=True, comments='%').shape[0]
 
     R = np.zeros((numrows, numcols))
     for i, rawpath in enumerate(rawpaths):
-        R[i] = np.loadtxt(rawpath, unpack=True)
+        R[i] = np.loadtxt(rawpath, unpack=True, comments='%')
 
     print 'Information of R (raw results matrix)'
     print R.shape
