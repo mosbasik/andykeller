@@ -61,7 +61,7 @@ if __name__ == '__main__':
     print ''
 
     # save ratings of the validation set ("hidden") in vector S
-    S = np.loadtxt('data/sliced_data/hidden.dta', dtype=int, unpack=True)[3]
+    S = np.loadtxt('/shared/data/hidden.dta', dtype=int, unpack=True)[3]
 
     print 'Information of S (rating vector of validation records)'
     print S.shape
