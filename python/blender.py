@@ -77,8 +77,6 @@ if __name__ == '__main__':
     print X
     print ''
 
-    assert False
-
 
     # RESULTS: CREATION OF RESULT VECTOR
     # ----------------------------------
@@ -86,15 +84,18 @@ if __name__ == '__main__':
     # calculate necessary size for the matrix R which contains all raw results,
     # initialize it with zeros, and populate it
     numrows = len(rawpaths)
-    numcols = np.load(rawpaths[0], 'r+').shape[0]
+    numcols = np.loadtxt(rawpaths[0], unpack=True).shape[0]
+
     R = np.zeros((numrows, numcols))
     for i, rawpath in enumerate(rawpaths):
-        R[i] = np.load(rawpath, 'r+').T
+        R[i] = np.loadtxt(rawpath, unpack=True)
 
     print 'Information of R (raw results matrix)'
     print R.shape
     print R
     print ''
+
+    assert False
 
     for i in range(R.shape[0]):
         R[i] = np.multiply(R[i], X[i])
