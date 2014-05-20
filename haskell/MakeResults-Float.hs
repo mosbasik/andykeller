@@ -65,7 +65,7 @@ main = do
       False -> return ()
       True -> do
         putStrLn $ "File \"" ++ outFile ++ "\" already exists."
-        putStrLn $ "Overwrite? (yes / no))"
+        putStrLn $ "Overwrite? (yes / no)"
         getLine >>= (\resp -> case resp of
                       'y':_ -> return ()
                       _ -> do
@@ -75,7 +75,7 @@ main = do
 
   -- Create blank output file and grab its handle.
   outHdl <- openFile outFile WriteMode
-  top <- hGetPosn outHdl -- For returning to later.
+  mapM_ (writeComment outHdl) comments -- Write comments
 
   -- Get start time
   startTime <- getCurrentTime
@@ -83,8 +83,11 @@ main = do
   -- Compute the result and write it to file.
   userMat <- readMatFromMM userFile
   itemMat <- readMatFromMM itemFile
+  -- DEBUG:
+  -- putStrLn $ "First line of user matrix: " ++ (show $ getRow userMat 0)
+  -- putStrLn $ "First line of item matrix: " ++ (show $ getRow itemMat 0)
   qualContents <- readFile qualFile
-  let coords = V.fromList [(x - 1, y - 1) | x:y:_ <- (map (map (read :: String -> Int) . words) (lines qualContents))]
+  let coords = V.fromList [(user - 1, movie - 1) | user:movie:_ <- (map (map (read :: String -> Int) . words) (lines qualContents))]
       results = V.map (getResultAt userMat itemMat) coords
 
   -- Write results to file.
@@ -92,11 +95,9 @@ main = do
 
   -- Add the runtime info to the list of comments.
   runTime <- (getCurrentTime >>= (\t -> return $ diffUTCTime t startTime))
-  let comments' = comments ++ ["Runtime: " ++ (show runTime)]
-
-  -- Return to the top of the file and write comments.
-  hSetPosn top
-  mapM_ (writeComment outHdl) comments'
+  
+  -- write comments.
+  putStrLn $ "Finished. Runtime: " ++ (show runTime)
 
   -- Clean up and exit.
   hClose outHdl
