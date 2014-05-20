@@ -38,14 +38,18 @@ def get_paths(path):
 def save_blending_result(result_array):
     '''
     '''
+    print 'save_blending_result has been called'
     filename = '/shared/out/blender/blended_' + str(time.time()) + '.dta'
     with open(filename, 'w') as f:
         for rating in result_array:
             if rating > 5:
+                print '5 written'
                 f.write('5\n')
             elif rating < 1:
+                print '1 written'
                 f.write('1\n')
             else:
+                print 'rating written'
                 f.write(str(rating) + '\n')
 
 
@@ -124,3 +128,4 @@ if __name__ == '__main__':
     print R
     print ''
 
+    save_blending_result(R)
