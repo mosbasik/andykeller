@@ -14,8 +14,8 @@ if __name__ == '__main__':
     V = np.matrix(V)
 
     # Save matrices to files
-    np.save("Umatrix", U)
-    np.save("Vmatrix", V)
+    np.save("/shared/out/als/Umatrix", U)
+    np.save("/shared/out/als/Vmatrix", V)
 
     #U = np.zeros((5, 2))
     #V = np.zeros((10, 2))

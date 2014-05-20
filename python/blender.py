@@ -18,17 +18,17 @@ import subprocess
 def get_paths(path):
     '''
     Given a path to a parent directory, returns two lists: all the validation
-    result files and all the raw result files (both *.npy files) in that
+    result files and all the raw result files (both *.dta files) in that
     directory tree as a list of path strings.
     '''
     # saves the results of this linux find command as a string, then parses the
     # string to a list of paths.
-    syscall_output = subprocess.check_output(['find', path, '-iname', 'validation.npy'])
+    syscall_output = subprocess.check_output(['find', path, '-iname', '*hidden.dta'])
     validationpaths = syscall_output[:-1].split('\n')
 
     # saves the results of this linux find command as a string, then parses the
     # string to a list of paths.
-    syscall_output = subprocess.check_output(['find', path, '-iname', 'raw.npy'])
+    syscall_output = subprocess.check_output(['find', path, '-iname', '*qual.dta'])
     rawpaths = syscall_output[:-1].split('\n')
 
     return (validationpaths, rawpaths)
