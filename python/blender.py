@@ -13,6 +13,7 @@ import scipy.linalg
 import os
 import pprint
 import subprocess
+import time
 
 
 def get_paths(path):
@@ -33,6 +34,19 @@ def get_paths(path):
 
     return (validationpaths, rawpaths)
 
+
+def save_blending_result(result_array):
+    '''
+    '''
+    filename = '/shared/out/blender/blended_' + str(time.time()) + '.dta'
+    with open(filename, 'w') as f:
+        for rating in result_array:
+            if rating > 5:
+                f.write('5\n')
+            elif rating < 1:
+                f.write('1\n')
+            else:
+                f.write(str(rating) + '\n')
 
 
 if __name__ == '__main__':
@@ -109,3 +123,4 @@ if __name__ == '__main__':
     print R.shape
     print R
     print ''
+
