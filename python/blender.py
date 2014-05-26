@@ -43,13 +43,13 @@ def save_blending_result(result_array):
     with open(filename, 'w') as f:
         for rating in result_array:
             if rating > 5:
-                print '5 written'
+                #print '5 written'
                 f.write('5\n')
             elif rating < 1:
-                print '1 written'
+                #print '1 written'
                 f.write('1\n')
             else:
-                print 'rating written'
+                #print 'rating written'
                 f.write(str(rating) + '\n')
 
 
