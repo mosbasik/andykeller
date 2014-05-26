@@ -55,22 +55,28 @@ def save_blending_result(result_array):
 
 if __name__ == '__main__':
     resultsdir = '/shared/out'  # parent directory of all results
-    validationpaths, rawpaths = get_paths(resultsdir)  # get filepaths
+    #validationpaths, rawpaths = get_paths(resultsdir)  # get filepaths
 
     # VALIDATION: CALCULATION OF WEIGHT VECTOR
     # ----------------------------------------
 
     # calculate necessary size for the matrix V which contains all validation
     # results, initialize it with zeros, and populate it
-    numrows = len(validationpaths)
-    numcols = np.loadtxt(validationpaths[0], unpack=True, comments='%').shape[0]
+    #numrows = len(validationpaths)
+    #numcols = np.loadtxt(validationpaths[0], unpack=True, comments='%').shape[0]
 
     #print 'number of validation paths: ' + str(numrows)
     #print 'number of rows in each validation file: ' + str(numcols)
 
-    V = np.zeros((numrows, numcols))
-    for i, validationpath in enumerate(validationpaths):
-        V[i] = np.loadtxt(validationpath, unpack=True, comments='%')
+    #V = np.zeros((numrows, numcols))
+    #for i, validationpath in enumerate(validationpaths):
+    #    V[i] = np.loadtxt(validationpath, unpack=True, comments='%')
+    V = np.array([[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0],
+                  [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0],
+                  #[0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0],
+                  #[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0],
+                  [2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0],
+                  [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]])
     V = V.T
 
     print 'Information of V (validation result matrix)'
@@ -79,7 +85,8 @@ if __name__ == '__main__':
     print ''
 
     # save ratings of the validation set ("hidden") in vector S
-    S = np.loadtxt('/shared/data/hidden.dta', dtype=int, unpack=True)[3]
+    #S = np.loadtxt('/shared/data/hidden.dta', dtype=int, unpack=True)[3]
+    S = np.array([1, 2, 3, 4, 5, 6, 7, 8])
 
     print 'Information of S (rating vector of validation records)'
     print S.shape
@@ -101,12 +108,17 @@ if __name__ == '__main__':
 
     # calculate necessary size for the matrix R which contains all raw results,
     # initialize it with zeros, and populate it
-    numrows = len(rawpaths)
-    numcols = np.loadtxt(rawpaths[0], unpack=True, comments='%').shape[0]
+    #numrows = len(rawpaths)
+    #numcols = np.loadtxt(rawpaths[0], unpack=True, comments='%').shape[0]
 
-    R = np.zeros((numrows, numcols))
-    for i, rawpath in enumerate(rawpaths):
-        R[i] = np.loadtxt(rawpath, unpack=True, comments='%')
+    #R = np.zeros((numrows, numcols))
+    #for i, rawpath in enumerate(rawpaths):
+    #    R[i] = np.loadtxt(rawpath, unpack=True, comments='%')
+    R = np.array([[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0],
+                  [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0],
+                  #[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0],
+                  [2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0],
+                  [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]])
 
     print 'Information of R (raw results matrix)'
     print R.shape
@@ -121,11 +133,12 @@ if __name__ == '__main__':
     print R
     print ''
 
-    R = np.mean(R, axis=0)
+    #R = np.mean(R, axis=0)
+    R = np.sum(R, axis=0)
 
-    print 'Information of R after taking elementwise average'
+    print 'Information of R after taking elementwise sum'
     print R.shape
     print R
     print ''
 
-    save_blending_result(R)
+    #save_blending_result(R)
