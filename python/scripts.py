@@ -23,10 +23,22 @@ def dta_top_Q_users(dta_path, Q):
 
     dta_topQusers = dta_counts[dta_indices]     # array of topQ user ids
 
-    topQ = np.zeros((Q, dta[0].length))     # make topQ array full of zeros
+    topQ = np.zeros((dta.length, dta[0].length))     # make topQ array full of zeros
+
+    count = 0                               # count of points by topQ users
 
     for i, point in enumerate(dta):         # loop through all points in dta
         if point[0] in dta_topQusers:       # if the user is a top Q user
             topQ[i] = point                 # save that point into topQ
+            count += 1                      # count is incremented
+
+    topQshort = np.zeros((count, dta[0].length))
+
+    for i, point in enumerate(topQ):
+        if point[0] = 0:
+            print 'breakpoint reached'
+            break
+        topQshort[i] = point
+
 
     np.savetext(path + '/' + plainname + '_top' + Q + 'users.dta', topQ)
