@@ -2,6 +2,7 @@
 #sys.path.append('/shared/andykeller/python')
 #from nflix_io import *
 from sklearn.neighbors import KNeighborsRegressor
+from sklearn.neighbors import NearestNeighbors
 import numpy as np
 import h5py
 import os
@@ -26,75 +27,72 @@ def make_dense_matrix(U_path, V_path):
                         dense_dset[i,j] = distance
 
 
-def run_model(U_path, V_path, hidden_path, qual_path, force_update=False):
+def unit_vector(vector):
+    """ Returns the unit vector of the vector.  """
+    return vector / np.linalg.norm(vector)
+
+
+def angle_between(v1, v2):
+    """ Returns the angle in radians between vectors 'v1' and 'v2'::
+
+            >>> angle_between((1, 0, 0), (0, 1, 0))
+            1.5707963267948966
+            >>> angle_between((1, 0, 0), (1, 0, 0))
+            0.0
+            >>> angle_between((1, 0, 0), (-1, 0, 0))
+            3.141592653589793
+    """
+    v1_u = unit_vector(v1)
+    v2_u = unit_vector(v2)
+    angle = np.arccos(np.dot(v1_u, v2_u))
+    if np.isnan(angle):
+        if (v1_u == v2_u).all():
+            return 0.0
+        else:
+            return np.pi
+    return angle
+
+
+def run_model(U_path, V_path, hidden_path, qual_path):
     '''
     '''
-
-    # if force_update:
-    #     make_dense_matrix(U_path, V_path)
-
-    # assert os.path.exists(os.path.dirname(U_path) + '/dense.h5py')
-
-    knn = KNeighborsRegressor(n_neighbors=5,
-                              weights='uniform',
-                              algorithm='kd_tree',
-                              leaf_size=30,
-                              p=2,
-                              metric='minkowski')
-    #print '03/13 regressor created'
+    N = 5
 
     with h5py.File(os.path.dirname(U_path) + '/base_U.h5py', 'r') as U_h5py:
+
         U = U_h5py['base_U.h5py']
 
-        for i in range(10):
-            print U[i]
+        knn = KNeighborsRegressor(n_neighbors=5,
+                                  weights='uniform',
+                                  algorithm='kd_tree',
+                                  leaf_size=30,
+                                  p=2,
+                                  metric='minkowski')
 
-        assert false
+        neigh = NearestNeighbors(n_neighbors=N)
 
-        knn.fit(U, rating)
-        #print '04/13 fitting completed'
+        neigh.fit(U)
 
-    user = None
-    move = None
-    rating = None
-    X = None
-    #print '05/13 variables cleared'
+        #points from qual (only users and ratings)
+        qual_users, qual_ratings = np.loadtxt('/shared/data/qual.dta',    
+                                              unpack=True,
+                                              comments='%',
+                                              usecols=(0,3))
 
-    user, movie = np.loadtxt(hidden_path,
-                             unpack=True,
-                             comments='%',
-                             usecols=(0, 1))
-    #print '06/13 hidden.dta loaded'
+        #indices of kn in U (or uids)
+        foo = np.zeros((qual_users[0], N))
 
-    hidden = np.array(zip(user, movie))
-    #print '07/13 user and movie zipped to create hidden'
+        for i, point in enumerate(qual_users):
+            _, kneigh = neigh.kneighbors(U[user])
+            foo[i] = kneigh
 
-    hidden_result = knn.predict(hidden)
-    hidden = None
-    #print '08/13 hidden_result calculated, hidden cleared'
+        bar = np.zeros((qual_users[0],))
+        for i, neighbors in enumerate(foo):
+            bar[i] = np.mean[qual_ratings[neighbors]]
 
-    np.savetxt('/shared/out/k-NN/k-NN_hidden.dta',
-               hidden_result)
-    hidden_result = None
-    #print '09/13 hidden_result saved to disk, hidden_result cleared'
+        print bar
 
-    user, movie = np.loadtxt(qual_path,
-                             unpack=True,
-                             comments='%',
-                             usecols=(0, 1))
-    #print '10/13 qual.dta loaded'
-
-    qual = np.array(zip(user, movie))
-    #print '11/13 user and movie zipped to create qual'
-
-    qual_result = knn.predict(qual)
-    qual = None
-    #print '12/13 qual_result calculated, qual cleared'
-
-    np.savetxt('/shared/out/k-NN/k-NN_qual.dta',
-               qual_result)
-    qual_result = None
-    #print '13/13 qual_result saved to disk, qual_result cleared'
+        np.savetxt(os.path.dirname(U_path) + '/k-NN_qual.dta')
 
 
 if __name__ == '__main__':
