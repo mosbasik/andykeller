@@ -1,7 +1,7 @@
 #import sys
 #sys.path.append('/shared/andykeller')
 #from nflix_io import *
-from sklean.neighbors import KNeighborsRegressor
+from sklearn.neighbors import KNeighborsRegressor
 import numpy as np
 
 def run_model(base_path, hidden_path, qual_path):
