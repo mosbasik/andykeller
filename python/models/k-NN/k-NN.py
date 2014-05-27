@@ -20,7 +20,7 @@ def run_model(base_path, hidden_path, qual_path):
                               weights='uniform',
                               algorithm='kd_tree',
                               leaf_size=30,
-                              p=2
+                              p=2,
                               metric='minkowski')
     print '03/13 regressor created'
 
