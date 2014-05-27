@@ -7,8 +7,8 @@ def dta_top_Q_users(dta_path, Q):
     the top Q users.
     '''
 
-    path = os.path.dirname(filepath)
-    basename = os.path.basename(filepath)
+    path = os.path.dirname(dta_path)
+    basename = os.path.basename(dta_path)
     plainname = '.'.join(basename.split('.')[:-1])
     
     dta = np.loadtxt(dta_path, dtype=float) # load up the file
