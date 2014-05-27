@@ -98,6 +98,7 @@ def run_model(U_path, V_path, hidden_path, qual_path, force_update=False):
 
 
 if __name__ == '__main__':
-    run_model('/shared/data/base.dta',
+    run_model('/shared/out/sgd/base_U.mm',
+              '/shared/out/sgd/base_V.mm',
               '/shared/data/hidden.dta',
               '/shared/data/qual.dta')
