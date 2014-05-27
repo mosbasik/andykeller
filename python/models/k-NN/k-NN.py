@@ -73,26 +73,33 @@ def run_model(U_path, V_path, hidden_path, qual_path):
 
         neigh.fit(U)
 
-        #points from qual (only users and ratings)
-        qual_users, qual_ratings = np.loadtxt('/shared/data/qual.dta',    
+        #points from base (only users and ratings)
+        base_users, base_ratings = np.loadtxt('/shared/data/base.dta',    
                                               unpack=True,
                                               comments='%',
                                               usecols=(0,3))
 
-        #indices of kn in U (or uids)
-        foo = np.zeros((qual_users[0], N))
+        #points from hidden (only users and ratings)
+        hidd_users, hidd_ratings = np.loadtxt('/shared/data/hidden.dta',    
+                                              unpack=True,
+                                              comments='%',
+                                              usecols=(0,3))
 
-        for i, point in enumerate(qual_users):
-            _, kneigh = neigh.kneighbors(U[user])
+        #U-indices of the k neighbors of a hidden-point (or uids)
+        foo = np.zeros((hidd_users[0], N))
+
+        for i, point in enumerate(hidd_users):
+            _, kneigh = neigh.kneighbors(U[point])
             foo[i] = kneigh
 
-        bar = np.zeros((qual_users[0],))
+        #averaged ratings of the k neighbors
+        bar = np.zeros((hidd_users[0],))
         for i, neighbors in enumerate(foo):
-            bar[i] = np.mean[qual_ratings[neighbors]]
+            bar[i] = np.mean[hidd_ratings[neighbors]]
 
         print bar
 
-        np.savetxt(os.path.dirname(U_path) + '/k-NN_qual.dta')
+        np.savetxt(os.path.dirname(U_path) + '/k-NN_hidden.dta')
 
 
 if __name__ == '__main__':
