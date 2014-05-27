@@ -35,7 +35,7 @@ def dta_top_Q_users(dta_path, Q):
     topQshort = np.zeros((count, dta[0].length))
 
     for i, point in enumerate(topQ):
-        if point[0] = 0:
+        if point[0] == 0:
             print 'breakpoint reached'
             break
         topQshort[i] = point
