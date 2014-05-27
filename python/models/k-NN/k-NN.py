@@ -35,7 +35,7 @@ def run_model(base_path, hidden_path, qual_path):
 
     user, movie = np.loadtxt(hidden_path,
                              unpack=True,
-                             comments='%'
+                             comments='%',
                              usecols=(0, 1))
     print '06/13 hidden.dta loaded'
 
