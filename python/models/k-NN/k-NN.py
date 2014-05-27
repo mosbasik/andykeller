@@ -53,7 +53,7 @@ def run_model(base_path, hidden_path, qual_path):
 
     user, movie = np.loadtxt(qual_path,
                              unpack=True,
-                             comments='%'
+                             comments='%',
                              usecols=(0, 1))
     print '10/13 qual.dta loaded'
 
