@@ -29,4 +29,4 @@ def dta_top_Q_users(dta_path, Q):
         if point[0] in dta_topQusers:       # if the user is a top Q user
             topQ[i] = point                 # save that point into topQ
 
-    np.savetext(path + '/' plainname + '_top' + Q + 'users.dta', topQ)
+    np.savetext(path + '/' + plainname + '_top' + Q + 'users.dta', topQ)
