@@ -85,6 +85,9 @@ def run_model(U_path, V_path, hidden_path, qual_path):
                                               comments='%',
                                               usecols=(0,3))
 
+
+        # TODO: combine the actions of these two loops for a twofold speedup
+
         #U-indices of the k neighbors of a hidden-point (or uids)
         foo = np.zeros((hidd_users[0], N))
 
