@@ -83,51 +83,38 @@ def run_model(U_path, V_path, hidden_path, qual_path):
                                               comments='%',
                                               usecols=(0,3))
 
+        ### HIDDEN ###
+
         #points from hidden (only users)
         hidd_users = np.loadtxt('/media/phenry/Data/Stored Documents/Schoolwork Archives/03 Junior Year/Term 3/CS-EE 156B/data/sliced_data/hidden.dta',    
                                 unpack=True,
                                 comments='%',
                                 usecols=(0,))
 
-
-        # TODO: combine the actions of these two loops for a twofold speedup
-
-        # U-indices of the k neighbors of a hidden-point (or uids)
-        #foo = np.zeros((hidd_users[0], N))
-
         # averaged ratings of the k neighbors
         bar = np.zeros(hidd_users.shape)
 
         for i, point in enumerate(hidd_users):
             _, kneigh = neigh.kneighbors(U[point])
-            #print type(kneigh)
-            #print len(kneigh)
-            #print kneigh.shape
-            #print kneigh
-            #print hidd_ratings[kneigh]
-            #print np.mean(hidd_ratings[kneigh])
-            #foo[i] = kneigh
             bar[i] = np.mean(base_ratings[kneigh])
-
-        
-        #for i, neighbors in enumerate(foo):
-        #    bar[i] = np.mean[hidd_ratings[neighbors]]
-
         print bar
-
         np.savetxt(os.path.dirname(U_path) + '/k-NN_hidden.dta', bar)
 
-        # LOAD QUAL
+
+        ### QUAL ###
+
         #points from qual (only users)
         qual_users = np.loadtxt('/media/phenry/Data/Stored Documents/Schoolwork Archives/03 Junior Year/Term 3/CS-EE 156B/data/sliced_data/hidden.dta',    
                                 unpack=True,
                                 comments='%',
                                 usecols=(0,))
 
+        # averaged ratings of the k neighbors
         bar = np.zeros(qual_users.shape)
         for i, point in enumerate(qual_users):
             _, kneigh = neigh,kneighbors(U[point])
             bar[i] = np.mean(base_ratings[kneigh])
+        print bar
         np.savetxt(os.path.dirname(U_path) + '/k-NN_qual.dta', bar)
 
 
