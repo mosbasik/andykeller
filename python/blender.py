@@ -76,7 +76,7 @@ if __name__ == '__main__':
     V = np.zeros((numrows, numcols))
     for i, validationpath in enumerate(validationpaths):
         print validationpath
-        V[i] = np.loadtxt(validationpath, unpagck=True, comments='%')
+        V[i] = np.loadtxt(validationpath, unpack=True, comments='%')
     # V = np.array([[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0],
     #               [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0],
     #               #[0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0],
