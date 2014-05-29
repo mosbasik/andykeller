@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import h5py
 
 def dta_top_Q_users(dta_path, Q):
     '''
@@ -71,9 +72,14 @@ def mm_to_h5py_svdpp(mm_path):
     # create new array full of zeros half as wide to save only the features
     np_features = np.zeros(feature_shape)
 
+    print np_features.shape
+
     # populate the new feature array
-    for i, row in enumerate(np_features):
-        for j, col in enumerate(np_features):
+    for i in range(feature_shape[0]):
+        for j in range(feature_shape[1]):
+            # print str(i) + ", " + str(j),
+            # print np_features.shape,
+            # print np_array.shape
             np_features[i, j] = np_array[i, j]
 
     # create and initialize h5py file and dataset of feature shape
@@ -85,3 +91,7 @@ def mm_to_h5py_svdpp(mm_path):
 
     print result_path + ' created'
     return result_path 
+
+
+if __name__ == '__main__':
+    mm_to_h5py_svdpp('/media/phenry/Data/Stored Documents/Schoolwork Archives/03 Junior Year/Term 3/CS-EE 156B/data/out/svdpp_30f_60i/base_U.mm')

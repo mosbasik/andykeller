@@ -58,55 +58,87 @@ def run_model(U_path, V_path, hidden_path, qual_path):
     '''
     N = 5
 
-    with h5py.File(os.path.dirname(U_path) + '/base_U.h5py', 'r') as U_h5py:
+    path = os.path.dirname(U_path)
+    basename = os.path.basename(U_path)
+    name = basename.split(".")[0]
 
-        U = U_h5py['base_U.h5py']
+    with h5py.File(path + '/' + name + '.h5py', 'r') as U_h5py:
 
-        knn = KNeighborsRegressor(n_neighbors=5,
-                                  weights='uniform',
-                                  algorithm='kd_tree',
-                                  leaf_size=30,
-                                  p=2,
-                                  metric='minkowski')
+        U = U_h5py[name + '.h5py']
+
+        # knn = KNeighborsRegressor(n_neighbors=5,
+        #                           weights='uniform',
+        #                           algorithm='kd_tree',
+        #                           leaf_size=30,
+        #                           p=2,
+        #                           metric='minkowski')
 
         neigh = NearestNeighbors(n_neighbors=N)
 
         neigh.fit(U)
 
         #points from base (only users and ratings)
-        base_users, base_ratings = np.loadtxt('/shared/data/base.dta',    
+        base_users, base_ratings = np.loadtxt('/media/phenry/Data/Stored Documents/Schoolwork Archives/03 Junior Year/Term 3/CS-EE 156B/data/sliced_data/probe.dta',    
                                               unpack=True,
                                               comments='%',
                                               usecols=(0,3))
 
-        #points from hidden (only users and ratings)
-        hidd_users, hidd_ratings = np.loadtxt('/shared/data/hidden.dta',    
-                                              unpack=True,
-                                              comments='%',
-                                              usecols=(0,3))
+        #points from hidden (only users)
+        hidd_users = np.loadtxt('/media/phenry/Data/Stored Documents/Schoolwork Archives/03 Junior Year/Term 3/CS-EE 156B/data/sliced_data/hidden.dta',    
+                                unpack=True,
+                                comments='%',
+                                usecols=(0,))
 
 
         # TODO: combine the actions of these two loops for a twofold speedup
 
-        #U-indices of the k neighbors of a hidden-point (or uids)
-        foo = np.zeros((hidd_users[0], N))
+        # U-indices of the k neighbors of a hidden-point (or uids)
+        #foo = np.zeros((hidd_users[0], N))
+
+        # averaged ratings of the k neighbors
+        bar = np.zeros(hidd_users.shape)
 
         for i, point in enumerate(hidd_users):
             _, kneigh = neigh.kneighbors(U[point])
-            foo[i] = kneigh
+            #print type(kneigh)
+            #print len(kneigh)
+            #print kneigh.shape
+            #print kneigh
+            #print hidd_ratings[kneigh]
+            #print np.mean(hidd_ratings[kneigh])
+            #foo[i] = kneigh
+            bar[i] = np.mean(base_ratings[kneigh])
 
-        #averaged ratings of the k neighbors
-        bar = np.zeros((hidd_users[0],))
-        for i, neighbors in enumerate(foo):
-            bar[i] = np.mean[hidd_ratings[neighbors]]
+        
+        #for i, neighbors in enumerate(foo):
+        #    bar[i] = np.mean[hidd_ratings[neighbors]]
 
         print bar
 
-        np.savetxt(os.path.dirname(U_path) + '/k-NN_hidden.dta')
+        np.savetxt(os.path.dirname(U_path) + '/k-NN_hidden.dta', bar)
+
+        # LOAD QUAL
+        #points from qual (only users)
+        qual_users = np.loadtxt('/media/phenry/Data/Stored Documents/Schoolwork Archives/03 Junior Year/Term 3/CS-EE 156B/data/sliced_data/hidden.dta',    
+                                unpack=True,
+                                comments='%',
+                                usecols=(0,))
+
+        bar = np.zeros(qual_users.shape)
+        for i, point in enumerate(qual_users):
+            _, kneigh = neigh,kneighbors(U[point])
+            bar[i] = np.mean(base_ratings[kneigh])
+        np.savetxt(os.path.dirname(U_path) + '/k-NN_qual.dta', bar)
+
 
 
 if __name__ == '__main__':
-    run_model('/shared/out/sgd/base_U.mm',
-              '/shared/out/sgd/base_V.mm',
-              '/shared/data/hidden.dta',
-              '/shared/data/qual.dta')
+    # run_model('/shared/out/sgd/base_U.mm',
+    #           '/shared/out/sgd/base_V.mm',
+    #           '/shared/data/hidden.dta',
+    #           '/shared/data/qual.dta')
+
+    run_model('/media/phenry/Data/Stored Documents/Schoolwork Archives/03 Junior Year/Term 3/CS-EE 156B/data/out/svdpp_30f_60i/base_U.mm',
+              '/media/phenry/Data/Stored Documents/Schoolwork Archives/03 Junior Year/Term 3/CS-EE 156B/data/out/svdpp_30f_60i/base_V.mm',
+              '/media/phenry/Data/Stored Documents/Schoolwork Archives/03 Junior Year/Term 3/CS-EE 156B/data/sliced_data/hidden.dta',
+              '/media/phenry/Data/Stored Documents/Schoolwork Archives/03 Junior Year/Term 3/CS-EE 156B/data/sliced_data/qual.dta')
