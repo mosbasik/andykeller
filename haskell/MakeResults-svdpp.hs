@@ -11,41 +11,7 @@ import System.Environment
 import System.Exit
 import System.IO as IO
 
-type ResultType = Float
-
-type Matrix = Vector (Vector ResultType)
-
-getRow :: Vector (Vector a) -> Int -> Vector a
-getRow m i = m V.! i
-
-getCol :: Vector (Vector a) -> Int -> Vector a
-getCol m i = V.map (V.! i) m
-
--- Create a numeric matrix from a matrix market file
-readMatFromMM :: IO.FilePath -> IO Matrix
-readMatFromMM f = do
-  contents <- readFile f -- contents :: String
-  -- goodLines :: [String]
-  let goodLines = tail  $ dropWhile ((== '%') . (!! 0))
-                        $ lines contents
-      mat       = V.map ((V.map read) . V.fromList . words) 
-                        $ V.fromList goodLines
-  return mat
-
-vectorProd :: (Num a) => Vector a -> Vector a -> a
-vectorProd v w
-  | (V.length v == V.length w) = vectorProd_ v w
-  | otherwise = error "Vector dimensions don't match up!"
-
-vectorProd_ :: (Num a) => Vector a -> Vector a -> a
-vectorProd_ v w = V.sum $ V.zipWith (*) v w
-
-vectorSum :: (Num a) => Vector a -> Vector a -> Vector a
-vectorSum v w | V.length v == (V.length w) = vectorSum_ v w
-              | otherwise = error "Vector dimensions don't match up!"
-
-vectorSum_ :: (Num a) => Vector a -> Vector a -> Vector a
-vectorSum_ v w = V.zipWith (+) v w
+import ResultType
 
 main :: IO ()
 main = do
@@ -115,7 +81,7 @@ main = do
   exitSuccess
 
   where
-    getResultAt :: Num a => Vector (Vector a) -> Vector (Vector a) -> Vector a -> Vector a
+    getResultAt :: Num a => [Vector a] -> [Vector a] -> Vector a -> Vector a
                          -> a -> (Int, Int) -> a
     getResultAt userMat itemMat 
                 userBiases itemBiases 
