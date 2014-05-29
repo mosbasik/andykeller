@@ -1,4 +1,4 @@
-function [ err ] = mmwrite(filename,A,comment,field,precision)
+function [ err ] = mmwrite(filename,A,comment,mattype,precision)
 %
 % Function: mmwrite(filename,A,comment,field,precision)
 %
