@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 21
+/svn/!svn/ver/2/trunk
+END
+global.c
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svn/!svn/ver/2/trunk/global.c
+END
+utest.c
+K 25
+svn:wc:ra_dav:version-url
+V 29
+/svn/!svn/ver/2/trunk/utest.c
+END
+COPYING.txt
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/2/trunk/COPYING.txt
+END
+usvdns1b.c
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/2/trunk/usvdns1b.c
+END
+usvdbkw1.c
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/2/trunk/usvdbkw1.c
+END
+utest.h
+K 25
+svn:wc:ra_dav:version-url
+V 29
+/svn/!svn/ver/2/trunk/utest.h
+END
+netflix.h
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svn/!svn/ver/2/trunk/netflix.h
+END
+mix2.c
+K 25
+svn:wc:ra_dav:version-url
+V 28
+/svn/!svn/ver/2/trunk/mix2.c
+END
+countusers.py
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/2/trunk/countusers.py
+END
+basic.c
+K 25
+svn:wc:ra_dav:version-url
+V 29
+/svn/!svn/ver/2/trunk/basic.c
+END
+moviebin2userbin.c
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/2/trunk/moviebin2userbin.c
+END
+basic.h
+K 25
+svn:wc:ra_dav:version-url
+V 29
+/svn/!svn/ver/2/trunk/basic.h
+END
+weight.c
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svn/!svn/ver/2/trunk/weight.c
+END
+ubaseline1.c
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/2/trunk/ubaseline1.c
+END
+netflix2moviebin.py
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/2/trunk/netflix2moviebin.py
+END
+README.txt
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/2/trunk/README.txt
+END
+qualify2bin.py
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/2/trunk/qualify2bin.py
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svn/!svn/ver/2/trunk/makefile
+END
+weight.h
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svn/!svn/ver/2/trunk/weight.h
+END

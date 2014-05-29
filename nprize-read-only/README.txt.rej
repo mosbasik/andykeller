@@ -1,0 +1,17 @@
+***************
+*** 30,35 ****
+  "aptitude install build-essential"
+  and the LAPACK package with
+  "apt-get install lapack3-dev"
+  
+  1) Create a sub-directory called "input".
+  The "input" directory should be located in the working directory, the 
+--- 30,37 ----
+  "aptitude install build-essential"
+  and the LAPACK package with
+  "apt-get install lapack3-dev"
++ * Mac OSX - install the Developer Tools, then edit the Makefile to uncomment
++ the build flag line.
+  
+  1) Create a sub-directory called "input".
+  The "input" directory should be located in the working directory, the 

@@ -1,0 +1,49 @@
+Index: README.txt
+===================================================================
+--- README.txt	(revision 2)
++++ README.txt	(working copy)
+@@ -30,6 +30,8 @@
+ "aptitude install build-essential"
+ and the LAPACK package with
+ "apt-get install lapack3-dev"
++* Mac OSX - install the Developer Tools, then edit the Makefile to uncomment
++the build flag line.
+ 
+ 1) Create a sub-directory called "input".
+ The "input" directory should be located in the working directory, the 
+Index: makefile
+===================================================================
+--- makefile	(revision 2)
++++ makefile	(working copy)
+@@ -1,16 +1,25 @@
+ CFLAGS=-O3
++ifeq ($(shell echo uname), Darwin)
++  # mac osx, lapack is here
++  LIB=-framework veclib
++ else
++  # linux and cygwin
++  LIB=-llpack
++endif
+ 
++default:
++	echo $(HI)
+ moviebin2userbin: moviebin2userbin.o basic.o
+ 	$(CC) -o $@ $^
+ 
+-utest0b1: utest.o global.o basic.o ubaseline1.o mix2.o -llapack
+-	$(CC) -o $@ $^
++utest0b1: utest.o global.o basic.o ubaseline1.o mix2.o
++	$(CC) $(LIB) -L/pt/lib -L/usr/local/lib -o $@ $^
+ 
+-usvdbkw1: utest.o basic.o usvdbkw1.o weight.o global.o mix2.o -llapack
+-	$(CC) -o $@ $^
++usvdbkw1: utest.o basic.o usvdbkw1.o weight.o global.o mix2.o
++	$(CC) $(LIB) -o $@ $^
+ 
+-utest10: utest.o basic.o usvdns1b.o global.o mix2.o -llapack
+-	$(CC) -o $@ $^
++utest10: utest.o basic.o usvdns1b.o global.o mix2.o
++	$(CC) $(LIB) -o $@ $^
+ 
+ clean:
+ 	rm *.o *.stackdump moviebin2userbin uuserbin2moviebin utest[0-9] *.exe
