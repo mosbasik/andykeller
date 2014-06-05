@@ -72,7 +72,7 @@ if __name__ == '__main__':
     # save ratings of the validation set ("hidden") in vector S
     S = np.loadtxt('/shared/data/hidden.dta', dtype=int, unpack=True)[3]
 
-    print 'Information of S (rating vector of validation records)'
+    print 'Information of S (rating vector of /shared/data/hidden.dta'
     print S.shape
     print S
     print ''
@@ -92,9 +92,12 @@ if __name__ == '__main__':
 
     V = np.zeros((numrows, numcols))
     for i, validationpath in enumerate(validationpaths):
-        print validationpath,
         V[i] = np.loadtxt(validationpath, unpack=True, comments='%')
-        print 'rmse: ' + rmse(S, V[i].T)
+        print 'Information of V[' + str(i) + ']'
+        print V[i].shape
+        print V[i]
+        print validationpath + ', RMSE: ' + rmse(S, V[i].T)
+        print ''
     V = V.T
 
     print 'Information of V (validation result matrix)'
