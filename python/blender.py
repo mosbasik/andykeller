@@ -33,12 +33,12 @@ def get_paths(path):
     '''
     # saves the results of this linux find command as a string, then parses the
     # string to a list of paths.
-    syscall_output = subprocess.check_output(['find', path, '-iname', '*f_hidden.dta'])
+    syscall_output = subprocess.check_output(['find', path, '-iname', '*20i_f_hidden.dta'])
     validationpaths = syscall_output[:-1].split('\n')
 
     # saves the results of this linux find command as a string, then parses the
     # string to a list of paths.
-    syscall_output = subprocess.check_output(['find', path, '-iname', '*f_qual.dta'])
+    syscall_output = subprocess.check_output(['find', path, '-iname', '*20i_f_qual.dta'])
     rawpaths = syscall_output[:-1].split('\n')
 
     return (validationpaths, rawpaths)
@@ -69,6 +69,14 @@ if __name__ == '__main__':
     # VALIDATION: CALCULATION OF WEIGHT VECTOR
     # ----------------------------------------
 
+    # save ratings of the validation set ("hidden") in vector S
+    S = np.loadtxt('/shared/data/hidden.dta', dtype=int, unpack=True)[3]
+
+    print 'Information of S (rating vector of validation records)'
+    print S.shape
+    print S
+    print ''
+
     # calculate necessary size for the matrix V which contains all validation
     # results, initialize it with zeros, and populate it
     numrows = len(validationpaths)
@@ -84,14 +92,9 @@ if __name__ == '__main__':
 
     V = np.zeros((numrows, numcols))
     for i, validationpath in enumerate(validationpaths):
-        print validationpath
+        print validationpath,
         V[i] = np.loadtxt(validationpath, unpack=True, comments='%')
-    # V = np.array([[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0],
-    #               [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0],
-    #               #[0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0],
-    #               #[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0],
-    #               [2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0],
-    #               [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]])
+        print 'rmse: ' + rmse(S, V[i])
     V = V.T
 
     print 'Information of V (validation result matrix)'
@@ -99,14 +102,7 @@ if __name__ == '__main__':
     print V
     print ''
 
-    # save ratings of the validation set ("hidden") in vector S
-    S = np.loadtxt('/shared/data/hidden.dta', dtype=int, unpack=True)[3]
-    #S = np.array([1, 2, 3, 4, 5, 6, 7, 8])
-
-    print 'Information of S (rating vector of validation records)'
-    print S.shape
-    print S
-    print ''
+    
 
     # find weight vector X using least-squares linear regression
     regression = scipy.linalg.lstsq(V, S, check_finite=False)
