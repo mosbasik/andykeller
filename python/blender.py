@@ -94,7 +94,7 @@ if __name__ == '__main__':
     for i, validationpath in enumerate(validationpaths):
         print validationpath,
         V[i] = np.loadtxt(validationpath, unpack=True, comments='%')
-        print 'rmse: ' + rmse(S, V[i])
+        print 'rmse: ' + rmse(S, V[i].T)
     V = V.T
 
     print 'Information of V (validation result matrix)'
