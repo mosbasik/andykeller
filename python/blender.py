@@ -16,6 +16,15 @@ import subprocess
 import time
 
 
+def rmse(correct, test):
+    '''
+    Given an np.array of "correct" values and an np.array of "test" values,
+    returns the Real Mean Squared Error between the two arrays.
+    '''
+    assert correct.shape == test.shape
+    return np.sqrt(((correct - test) ** 2).mean(axis=None))
+
+
 def get_paths(path):
     '''
     Given a path to a parent directory, returns two lists: all the validation
@@ -24,12 +33,12 @@ def get_paths(path):
     '''
     # saves the results of this linux find command as a string, then parses the
     # string to a list of paths.
-    syscall_output = subprocess.check_output(['find', path, '-iname', '*hidden.dta'])
+    syscall_output = subprocess.check_output(['find', path, '-iname', '*f_hidden.dta'])
     validationpaths = syscall_output[:-1].split('\n')
 
     # saves the results of this linux find command as a string, then parses the
     # string to a list of paths.
-    syscall_output = subprocess.check_output(['find', path, '-iname', '*qual.dta'])
+    syscall_output = subprocess.check_output(['find', path, '-iname', '*f_qual.dta'])
     rawpaths = syscall_output[:-1].split('\n')
 
     return (validationpaths, rawpaths)
