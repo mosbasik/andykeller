@@ -33,12 +33,12 @@ def get_paths(path):
     '''
     # saves the results of this linux find command as a string, then parses the
     # string to a list of paths.
-    syscall_output = subprocess.check_output(['find', path, '-iname', '*20i_f_hidden.dta'])
+    syscall_output = subprocess.check_output(['find', path, '-iname', '*60i_f_hidden.dta'])
     validationpaths = syscall_output[:-1].split('\n')
 
     # saves the results of this linux find command as a string, then parses the
     # string to a list of paths.
-    syscall_output = subprocess.check_output(['find', path, '-iname', '*20i_f_qual.dta'])
+    syscall_output = subprocess.check_output(['find', path, '-iname', '*60i_f_qual.dta'])
     rawpaths = syscall_output[:-1].split('\n')
 
     return (validationpaths, rawpaths)
