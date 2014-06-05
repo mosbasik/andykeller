@@ -82,13 +82,8 @@ if __name__ == '__main__':
     numrows = len(validationpaths)
     numcols = np.loadtxt(validationpaths[0], unpack=True, comments='%').shape[0]
 
-    print numrows
-    print numcols
-
-    print '---------------------------------------'
-
-    #print 'number of validation paths: ' + str(numrows)
-    #print 'number of rows in each validation file: ' + str(numcols)
+    print 'number of validation paths: ' + str(numrows)
+    print 'number of rows in the first validation file: ' + str(numcols)
 
     V = np.zeros((numrows, numcols))
     for i, validationpath in enumerate(validationpaths):
@@ -96,7 +91,7 @@ if __name__ == '__main__':
         print 'Information of V[' + str(i) + ']'
         print V[i].shape
         print V[i]
-        print validationpath + ', RMSE: ' + rmse(S, V[i].T)
+        print validationpath + ', RMSE: ' + str(rmse(S, V[i].T))
         print ''
     V = V.T
 
